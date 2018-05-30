@@ -1,0 +1,29 @@
+{
+  "name": "git-slop",
+  "version": "0.0.1",
+  "description": "cleaner git commands",
+  "main": "./src/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "amble ./src/status.js"
+  },
+  "bin": {
+    "gs": "./src/status.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/git-slop.git"
+  },
+  "author": "spencermountain@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spencermountain/git-slop/issues"
+  },
+  "homepage": "https://github.com/spencermountain/git-slop#readme",
+  "dependencies": {
+    "amble": "0.0.6",
+    "chalk": "^2.4.1",
+    "nodegit": "^0.22.0",
+    "yargs": "^11.0.0"
+  }
+}
