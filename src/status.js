@@ -8,45 +8,45 @@ var argv = yargs
   .argv;
 
 let path = argv['_'][0]
-
-const printNew=function(files){
-  let newFiles=files.filter((f) => f.isNew())
+const printNew = function(files) {
+  let newFiles = files.filter((f) => f.isNew())
   newFiles.forEach((f) => {
-    console.log(chalk.green('+  '+f.path()))
+    console.log(chalk.green('+  ' + f.path()))
   })
 }
-const printChanged=function(files){
-  let dirty=files.filter((f) => f.isModified() || f.isTypechange() || f.isIgnored())
+const printChanged = function(files) {
+  let dirty = files.filter((f) => f.isModified() || f.isTypechange() || f.isIgnored())
   dirty.forEach((f) => {
-    console.log(chalk.blue('~  '+f.path()))
+    console.log(chalk.blue('~  ' + f.path()))
   })
 }
-const printMoved=function(files){
-  let dirty=files.filter((f) => f.isRenamed())
+const printMoved = function(files) {
+  let dirty = files.filter((f) => f.isRenamed())
   dirty.forEach((f) => {
-    console.log(chalk.blue('>  '+f.path()))
+    console.log(chalk.blue('>  ' + f.path()))
   })
 }
-const printDeleted=function(files){
-  let dirty=files.filter((f) => f.isIgnored() || f.isDeleted())
+const printDeleted = function(files) {
+  let dirty = files.filter((f) => f.isIgnored() || f.isDeleted())
   dirty.forEach((f) => {
-    console.log(chalk.red('-  '+f.path()))
+    console.log(chalk.red('-  ' + f.path()))
   })
 }
-const printConflicted=function(files){
-  let dirty=files.filter((f) => f.isConflicted())
+const printConflicted = function(files) {
+  let dirty = files.filter((f) => f.isConflicted())
   dirty.forEach((f) => {
-    console.log(chalk.red('*  '+f.path()))
+    console.log(chalk.red('*  ' + f.path()))
   })
 }
 
 git.Repository.open(path)
   .then(function(repo) {
     repo.getStatus().then(function(files) {
+      console.log('')
       printNew(files)
       printDeleted(files)
       printChanged(files)
       printMoved(files)
       printConflicted(files)
     });
-});
+  });
