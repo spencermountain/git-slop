@@ -5,7 +5,7 @@
   <div>make fewer mistakes with cleaner git commands</div>
 </div>
 
-when released, it will export the following commands to use globally:
+reformatting of some common git commands:
 
 `slop-status`
 
