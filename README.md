@@ -1,8 +1,7 @@
 # git-slop
-make fewer mistakes with these cleaner git commands
+make fewer mistakes using these cleaner git commands
 
 
-WIP -
 when released, it will export the following commands to use globally:
 
 `gs`
