@@ -8,13 +8,14 @@ var argv = yargs
   .example('gs ./my/repo')
   .argv;
 
-let path = argv['_'][0]
+let path = argv['_'][0] || process.cwd()
+
 const countCommits = function(repo) {
   let lastDay = null
   var walker = git.Revwalk.create(repo);
   // walker.pushHead();
   walker.pushGlob('refs/heads/*');
-  walker.getCommitsUntil(c => true).then(function(commits) {
+  walker.getCommitsUntil(() => true).then(function(commits) {
     commits = commits.reverse()
     commits.forEach((c) => {
       let d = c.date()
@@ -37,8 +38,7 @@ const countCommits = function(repo) {
   })
 }
 
-
-git.Repository.open(path)
+git.Repository.openExt(path, 2, '~')
   .then(function(repo) {
     countCommits(repo)
   })

@@ -7,7 +7,7 @@ when released, it will export the following commands to use globally:
 
 `gs`
 
-![image](https://user-images.githubusercontent.com/399657/40754344-e425a890-6446-11e8-86dc-f01ca5ffdeb3.png)
+![image](https://user-images.githubusercontent.com/399657/40755022-70bed936-644a-11e8-8802-849107b72f33.png)
 
 `glog`
 

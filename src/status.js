@@ -7,39 +7,65 @@ var argv = yargs
   .example('gs ./my/repo')
   .argv;
 
-let path = argv['_'][0]
+let path = argv['_'][0] || process.cwd()
+
 const printNew = function(files) {
+  let symbol = '+'
   let newFiles = files.filter((f) => f.isNew())
-  newFiles.forEach((f) => {
-    console.log(chalk.green('+  ' + f.path()))
+  newFiles.forEach((f, i) => {
+    symbol = i > 0 ? ' ' : symbol
+    console.log(chalk.green(symbol + ' ' + f.path()))
   })
+  if (newFiles.length > 0) {
+    console.log('')
+  }
 }
 const printChanged = function(files) {
-  let dirty = files.filter((f) => f.isModified() || f.isTypechange() || f.isIgnored())
-  dirty.forEach((f) => {
-    console.log(chalk.blue('~  ' + f.path()))
+  let symbol = '~'
+  let ls = files.filter((f) => f.isModified() || f.isTypechange() || f.isIgnored())
+  ls.forEach((f, i) => {
+    symbol = i > 0 ? ' ' : symbol
+    console.log(chalk.blue(symbol + ' ' + f.path()))
   })
+  if (ls.length > 0) {
+    console.log('')
+  }
 }
 const printMoved = function(files) {
-  let dirty = files.filter((f) => f.isRenamed())
-  dirty.forEach((f) => {
-    console.log(chalk.blue('>  ' + f.path()))
+  let symbol = '>'
+  let ls = files.filter((f) => f.isRenamed())
+  ls.forEach((f, i) => {
+    symbol = i > 0 ? ' ' : symbol
+    console.log(chalk.blue(symbol + ' ' + f.path()))
   })
+  if (ls.length > 0) {
+    console.log('')
+  }
 }
 const printDeleted = function(files) {
-  let dirty = files.filter((f) => f.isIgnored() || f.isDeleted())
-  dirty.forEach((f) => {
-    console.log(chalk.red('-  ' + f.path()))
+  let symbol = '-'
+  let ls = files.filter((f) => f.isIgnored() || f.isDeleted())
+  ls.forEach((f, i) => {
+    symbol = i > 0 ? ' ' : symbol
+    console.log(chalk.red(symbol + ' ' + f.path()))
   })
+  if (ls.length > 0) {
+    console.log('')
+  }
 }
 const printConflicted = function(files) {
-  let dirty = files.filter((f) => f.isConflicted())
-  dirty.forEach((f) => {
-    console.log(chalk.red('*  ' + f.path()))
+  let symbol = '*'
+  let ls = files.filter((f) => f.isConflicted())
+  ls.forEach((f, i) => {
+    symbol = i > 0 ? ' ' : symbol
+    console.log(chalk.red(symbol + ' ' + f.path()))
   })
+  if (ls.length > 0) {
+    console.log('')
+  }
 }
 
-git.Repository.open(path)
+git.Repository.openExt(path, 2, '~')
   .then(function(repo) {
     repo.getStatus().then(function(files) {
       console.log('')
@@ -49,4 +75,7 @@ git.Repository.open(path)
       printMoved(files)
       printConflicted(files)
     });
-  });
+  })
+  .catch(function(reason) {
+    console.log(reason)
+  })
