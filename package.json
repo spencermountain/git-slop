@@ -22,10 +22,12 @@
   },
   "homepage": "https://github.com/spencermountain/git-slop#readme",
   "dependencies": {
-    "amble": "0.0.6",
     "chalk": "^2.4.1",
     "nodegit": "^0.22.0",
     "spacetime": "^4.1.1",
     "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "amble": "0.0.6"
   }
 }
