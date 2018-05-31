@@ -2,7 +2,7 @@
   <a href="https://npmjs.org/package/git-slop">
     <img src="https://img.shields.io/npm/v/git-slop.svg?style=flat-square" />
   </a>
-  make fewer mistakes with cleaner git commands
+  <div>make fewer mistakes with cleaner git commands</div>
 </div>
 
 when released, it will export the following commands to use globally:
@@ -24,6 +24,7 @@ then in ~/.bash_profile, add whatever aliases you'd like:
 alias gs="slop-status"
 alias glog="slop-log"
 ```
+WIP
 
 made with [nodegit](http://npmjs.com/package/nodegit), [chalk](http://npmjs.com/package/chalk), and [spacetime](http://npmjs.com/package/nodegit)
 
