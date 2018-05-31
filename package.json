@@ -8,7 +8,8 @@
     "watch": "amble ./src/status.js"
   },
   "bin": {
-    "gs": "./src/status.js"
+    "slop-status": "./src/status.js",
+    "slop-log": "./src/log.js"
   },
   "repository": {
     "type": "git",

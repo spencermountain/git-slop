@@ -1,17 +1,29 @@
-# git-slop
-make fewer mistakes using these cleaner git commands
-
+<div align="center">
+  <a href="https://npmjs.org/package/git-slop">
+    <img src="https://img.shields.io/npm/v/git-slop.svg?style=flat-square" />
+  </a>
+  make fewer mistakes with cleaner git commands
+</div>
 
 when released, it will export the following commands to use globally:
 
-`gs`
+`slop-status`
 
 ![image](https://user-images.githubusercontent.com/399657/40755022-70bed936-644a-11e8-8802-849107b72f33.png)
 
-`glog`
+`slop-log`
 
 ![image](https://user-images.githubusercontent.com/399657/40754315-b9a437a8-6446-11e8-8880-d42b05915cd3.png)
 
+best way to use is to install this package globally, then alias to it:
+
+`npm i -g git-slop`
+
+then in ~/.bash_profile, add whatever aliases you'd like:
+```sh
+alias gs="slop-status"
+alias glog="slop-log"
+```
 
 made with [nodegit](http://npmjs.com/package/nodegit), [chalk](http://npmjs.com/package/chalk), and [spacetime](http://npmjs.com/package/nodegit)
 

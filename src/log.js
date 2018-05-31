@@ -20,9 +20,11 @@ const countCommits = function(repo) {
     commits.forEach((c) => {
       let d = c.date()
       let s = spacetime(d.getTime())
-      let day = s.dayOfYear()
+      let user = c.author().name()
+      let day = s.dayOfYear() + user
       if (day !== lastDay) {
-        console.log(chalk.magenta(s.format('MMM d')))
+        let out = chalk.magenta(s.format('MMM d'))
+        console.log(out.padEnd(26, ' ') + chalk.yellow(user))
       }
       lastDay = day
       let time = '   -  ' + s.format('time')
