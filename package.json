@@ -1,6 +1,6 @@
 {
   "name": "git-slop",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "cleaner git commands",
   "main": "./src/index",
   "scripts": {
@@ -9,7 +9,8 @@
   },
   "bin": {
     "slop-status": "./src/status.js",
-    "slop-log": "./src/log.js"
+    "slop-log": "./src/log.js",
+    "slop-issues": "./src/issues.js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,10 @@
   "homepage": "https://github.com/spencermountain/git-slop#readme",
   "dependencies": {
     "chalk": "^2.4.1",
-    "nodegit": "^0.22.0",
-    "spacetime": "^4.1.1",
-    "yargs": "^11.0.0"
+    "got": "^9.0.0",
+    "nodegit": "^0.22.2",
+    "spacetime": "^4.3.0",
+    "yargs": "^12.0.1"
   },
   "devDependencies": {
     "amble": "0.0.6"
