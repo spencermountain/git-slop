@@ -9,4 +9,10 @@ let msg = args['_'].join(' ');
 msg = msg.replace(/['"]/g, '');
 msg = msg.trim();
 
-exec(`git commit -m '${msg}'`);
+exec();
+
+exec(`git commit -m '${msg}'`, function(code, stdout, stderr) {
+  console.log('Exit code:', code);
+  console.log('Program output:', stdout);
+  console.log('Program stderr:', stderr);
+});
