@@ -16,19 +16,24 @@ const countCommits = function(repo) {
   // walker.pushHead();
   walker.pushGlob('refs/heads/*');
   walker.getCommitsUntil(() => true).then(function(commits) {
-    commits = commits.reverse()
-    commits.forEach((c) => {
+    // commits = commits.reverse()
+    let some = commits.slice(0, 25)
+    some.forEach((c) => {
       let d = c.date()
       let s = spacetime(d.getTime())
       let user = c.author().name()
       let day = s.dayOfYear() + user
       if (day !== lastDay) {
         let out = chalk.magenta(s.format('MMM d'))
-        console.log(out.padEnd(26, ' ') + chalk.yellow(user))
+        //add year, if necessary
+        if (s.year() !== new Date().getFullYear()) {
+          out += ' ' + s.year()
+        }
+        console.log(out.padEnd(18, ' ') + chalk.yellow('- ' + user + ' -'))
       }
       lastDay = day
-      let time = '   -  ' + s.format('time')
-      time = time.padEnd(18, ' ')
+      let time = '    ' + s.format('time')
+      time = time.padEnd(12, ' ')
       time = chalk.grey(time)
 
       let msg = c.message().split('\n')[0]

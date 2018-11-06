@@ -9,7 +9,7 @@ reformatting of some common git commands:
 
 `slop-status`
 
-![image](https://user-images.githubusercontent.com/399657/40755022-70bed936-644a-11e8-8802-849107b72f33.png)
+![image](https://user-images.githubusercontent.com/399657/48082771-6c7eff00-e1c1-11e8-8314-30b8d3ee6fe7.png)
 
 `slop-log`
 
