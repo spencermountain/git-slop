@@ -14,7 +14,6 @@ msg = msg.trim();
 msg = msg || ' - ';
 
 shelljs.exec(`git commit -m '${msg}'`, function(code, stdout, stderr) {
-  console.log(stdout);
   if (code !== 0 || stderr) {
     console.log(stderr);
     process.exit(1);

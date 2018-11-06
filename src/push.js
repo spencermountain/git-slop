@@ -8,10 +8,10 @@ spinner.color = 'green';
 
 shelljs.exec(`git push`, function(code, stdout, stderr) {
   if (code !== 0 || stderr) {
+    console.log('---error--');
     console.log(stderr);
     process.exit(1);
   }
-  console.log('');
   spinner.stopAndPersist({
     symbol: '✔️'
   });
