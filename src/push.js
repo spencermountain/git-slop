@@ -3,24 +3,21 @@ var shelljs = require('shelljs');
 shelljs.config.silent = true;
 const ora = require('ora');
 
-const spinner = ora(' - ').start();
+const spinner = ora('').start();
 spinner.color = 'green';
 
-shelljs.exec(`git push`, function(code, stdout, stderr) {
-  console.log('---');
-  console.log('1', stdout);
-  console.log('2', stderr);
-  console.log('---');
-  if (code !== 0 || stderr) {
+shelljs.exec(`git push`, function(code, hmm, stdout) {
+  if (code !== 0) {
     spinner.stopAndPersist({
-      symbol: '',
+      symbol: '↩',
       text: '',
     });
-    console.log(stderr);
+    console.log(stdout);
     process.exit(1);
   }
   spinner.stopAndPersist({
-    symbol: '✔️'
+    symbol: chalk.green('\n  ✔️'),
+    text: '',
   });
-  console.log(chalk.green('             ✅   '));
+// console.log(chalk.green('               '));
 });
