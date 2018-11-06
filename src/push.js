@@ -7,11 +7,14 @@ const spinner = ora(' - ').start();
 spinner.color = 'green';
 
 shelljs.exec(`git push`, function(code, stdout, stderr) {
+  console.log('---');
+  console.log('1', stdout);
+  console.log('2', stderr);
+  console.log('---');
   if (code !== 0 || stderr) {
-    console.log('error', code);
     spinner.stopAndPersist({
       symbol: '',
-      text: '-',
+      text: '',
     });
     console.log(stderr);
     process.exit(1);
