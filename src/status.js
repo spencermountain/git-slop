@@ -1,21 +1,20 @@
 #! /usr/bin/env node
+const simpleGit = require('simple-git');
 var chalk = require('chalk');
-var git = require("nodegit");
 var yargs = require('yargs');
 var argv = yargs
   .usage('gs <path>')
   .example('gs ./my/repo')
   .argv;
 
+// var path = '/Users/spencer/mountain/wtf_wikipedia'
 let path = argv['_'][0] || process.cwd();
 
-const isStaged = function(f) {
-  return f.inIndex() !== 0;
-};
+const repo = simpleGit(path);
 
-const printLine = function(f, symbol, color) {
-  let msg = chalk[color](symbol + ' ' + f.path());
-  if (isStaged(f)) {
+const printLine = function(file, symbol, color, isStaged) {
+  let msg = chalk[color](symbol + ' ' + file);
+  if (isStaged) {
     msg = msg.padStart(38, ' ') + chalk.grey('   | ');
   } else {
     msg = ''.padEnd(28, ' ') + chalk.grey('   |   ') + msg;
@@ -23,49 +22,43 @@ const printLine = function(f, symbol, color) {
   console.log(msg);
 };
 
-const printNew = function(files) {
-  let newFiles = files.filter((f) => f.isNew());
-  newFiles.forEach((f) => {
-    printLine(f, '+', 'green');
-  });
-};
-
-const printChanged = function(files) {
-  let ls = files.filter((f) => f.isModified() || f.isTypechange() || f.isIgnored());
-  ls.forEach((f) => {
-    printLine(f, '~', 'blue');
-  });
-};
-const printMoved = function(files) {
-  let ls = files.filter((f) => f.isRenamed());
-  ls.forEach((f) => {
-    printLine(f, '>', 'blue');
-  });
-};
-const printDeleted = function(files) {
-  let ls = files.filter((f) => f.isIgnored() || f.isDeleted());
-  ls.forEach((f) => {
-    printLine(f, '-', 'red');
-  });
-};
-const printConflicted = function(files) {
-  let ls = files.filter((f) => f.isConflicted());
-  ls.forEach((f) => {
-    printLine(f, '*', 'red');
-  });
-};
-
-git.Repository.openExt(path, 2, '~')
-  .then(function(repo) {
-    repo.getStatus().then(function(files) {
-      console.log('');
-      printNew(files);
-      printDeleted(files);
-      printChanged(files);
-      printMoved(files);
-      printConflicted(files);
-    });
+const printModified = function(arr, staged) {
+  arr.forEach((file) => {
+    printLine(file, '~', 'blue', staged[file]);
   })
-  .catch(function(reason) {
-    console.log(reason);
-  });
+}
+const printNew = function(arr, staged) {
+  arr.forEach((file) => {
+    printLine(file, '+', 'green', staged[file]);
+  })
+}
+const printRemoved = function(arr, staged) {
+  arr.forEach((file) => {
+    printLine(file, '-', 'red', staged[file]);
+  })
+}
+const printMoved = function(arr, staged) {
+  arr.forEach((file) => {
+    printLine(file, '>', 'blue', staged[file]);
+  })
+}
+const printConflicted = function(arr, staged) {
+  arr.forEach((file) => {
+    printLine(file, '❌', 'red', staged[file]);
+  })
+}
+
+repo.status((err, status) => {
+  let staged = status.staged.reduce((h, f) => {
+    h[f] = true
+    return h;
+  }, {});
+  status.created.forEach((f) => staged[f] = true)
+
+  printConflicted(status.conflicted, staged)
+  printModified(status.modified, staged)
+  printNew(status.not_added, staged)
+  printNew(status.created, staged)
+  printRemoved(status.deleted, staged)
+  printMoved(status.renamed, staged)
+})
