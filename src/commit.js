@@ -29,5 +29,5 @@ repo.commit(msg, function(err, r) {
     console.log(chalk.magenta('\n                 -empty- '))
     return
   }
-  console.log(chalk.blue('          ~' + r.summary.changes + ' changes'))
+  console.log(chalk.green('          ~' + r.summary.changes + ' changes~'))
 })
