@@ -23,8 +23,11 @@ msg = msg || ' - ';
 repo.commit(msg, function(err, r) {
   if (err) {
     console.log(err)
-  } else {
-    console.log(r)
-    console.log(chalk.green('\n  ✔️'))
+    return
   }
+  if (!r || !r.commit || !r.summary || r.summary.changes === 0) {
+    console.log(chalk.magenta('\n                 -empty- '))
+    return
+  }
+  console.log(chalk.green('\n  ✔️'))
 })

@@ -39,7 +39,7 @@ const printRemoved = function(arr, staged) {
 }
 const printMoved = function(arr, staged) {
   arr.forEach((file) => {
-    printLine(file, '>', 'blue', staged[file]);
+    printLine(file, '>', 'yellow', staged[file]);
   })
 }
 const printConflicted = function(arr, staged) {
@@ -53,12 +53,14 @@ repo.status((err, status) => {
     h[f] = true
     return h;
   }, {});
+  let renamed = status.renamed.map(o => o.to)
   status.created.forEach((f) => staged[f] = true)
-
+  renamed.forEach((f) => staged[f] = true)
+  // console.log(status)
   printConflicted(status.conflicted, staged)
   printModified(status.modified, staged)
   printNew(status.not_added, staged)
   printNew(status.created, staged)
   printRemoved(status.deleted, staged)
-  printMoved(status.renamed, staged)
+  printMoved(renamed, staged)
 })
