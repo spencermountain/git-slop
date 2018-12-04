@@ -29,5 +29,9 @@ repo.commit(msg, function(err, r) {
     console.log(chalk.magenta('\n                 -empty- '))
     return
   }
-  console.log(chalk.green('          ~' + r.summary.changes + ' changes~'))
+  let noun = ' change'
+  if (r.summary.changes > 1) {
+    noun += 's'
+  }
+  console.log(chalk.green('          +' + r.summary.changes + noun))
 })
