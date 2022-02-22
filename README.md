@@ -18,6 +18,9 @@ reformatting of some common git commands:
 `slop-issues`
 ![image](https://user-images.githubusercontent.com/399657/44490437-5a62db00-a62c-11e8-8494-49890180848b.png)
 
+`slop-people`
+![image](https://user-images.githubusercontent.com/399657/155150945-bfef5793-a7f1-4040-83fa-296b5ae241cb.png)
+
 best way to use is to install this package globally, then alias to it:
 
 `npm i -g git-slop`
