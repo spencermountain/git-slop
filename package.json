@@ -23,7 +23,7 @@
   "homepage": "https://github.com/spencermountain/git-slop#readme",
   "dependencies": {
     "chalk": "4.1.1",
-    "got": "11.8.2",
+    "got": "12.5.3",
     "ora": "5.4.0",
     "shelljs": "0.8.5",
     "simple-git": "2.38.0",
