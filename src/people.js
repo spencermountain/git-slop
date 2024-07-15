@@ -1,20 +1,9 @@
 #! /usr/bin/env node
-const simpleGit = require('simple-git')
-var yargs = require('yargs')
-require('./_polyfill')
-var chalk = require('chalk')
-var argv = yargs.usage('gs <path>').example('gs ./my/repo').argv
+import simpleGit from 'simple-git'
+import './_polyfill.js'
+import chalk  from 'chalk'
 
-/** add spaces at the end */
-const padEnd = function (str, width) {
-  str = str.toString()
-  while (str.length < width) {
-    str += ' '
-  }
-  return str
-}
-
-let path = argv['_'][0] || process.cwd()
+let path = process.cwd()
 
 const repo = simpleGit(path)
 

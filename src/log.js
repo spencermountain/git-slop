@@ -1,13 +1,10 @@
 #! /usr/bin/env node
-const simpleGit = require('simple-git')
-var chalk = require('chalk')
-var yargs = require('yargs')
-var spacetime = require('spacetime')
-require('./_polyfill')
-var argv = yargs.usage('gs <path>').example('gs ./my/repo').argv
+import simpleGit from 'simple-git'
+import chalk from 'chalk'
+import spacetime from 'spacetime'
+import './_polyfill.js'
 
-let path = argv['_'][0] || process.cwd()
-
+let path = process.cwd()
 const repo = simpleGit(path)
 
 const printLog = function(commits) {

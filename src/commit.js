@@ -1,10 +1,9 @@
-const simpleGit = require('simple-git')
-var chalk = require('chalk')
-var yargs = require('yargs')
-var args = yargs
-  .usage('gc <msg>')
+import simpleGit from 'simple-git'
+import chalk from 'chalk'
+import yargs from 'yargs'
+var args = yargs('gc <msg>')
   .example('gc these pretezels are making me thirsty ').argv
-
+console.log(args)
 let path = process.cwd()
 const repo = simpleGit(path)
 
@@ -12,6 +11,7 @@ let msg = args['_'].join(' ')
 msg = msg.replace(/['"]/g, '')
 msg = msg.trim()
 msg = msg || ' - '
+console.log(msg)
 
 repo.commit(msg, function(err, r) {
   if (err) {

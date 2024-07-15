@@ -1,13 +1,10 @@
 #! /usr/bin/env node
 'use strict'
-const simpleGit = require('simple-git')
-require('./_polyfill')
-const chalk = require('chalk')
-const yargs = require('yargs')
-const argv = yargs.usage('gs <path>').example('gs ./my/repo').argv
+import simpleGit from 'simple-git'
+import './_polyfill.js'
+import chalk from 'chalk'
 
-// var path = '/Users/spencer/mountain/wtf_wikipedia'
-let path = argv['_'][0] || process.cwd()
+let path = process.cwd()
 
 const repo = simpleGit(path)
 
