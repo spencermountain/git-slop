@@ -1,9 +1,10 @@
 import simpleGit from 'simple-git'
 import chalk from 'chalk'
 import yargs from 'yargs'
-var args = yargs('gc <msg>')
+const args = yargs('gc <msg>')
   .example('gc these pretezels are making me thirsty ').argv
-console.log(args)
+
+  console.log(args)
 let path = process.cwd()
 const repo = simpleGit(path)
 
