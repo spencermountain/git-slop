@@ -1,14 +1,13 @@
 import simpleGit from 'simple-git'
 import chalk from 'chalk'
 import yargs from 'yargs'
-const args = yargs('gc <msg>')
-  .example('gc these pretezels are making me thirsty ').argv
+const args = process.argv
 
   console.log(args)
 let path = process.cwd()
 const repo = simpleGit(path)
 
-let msg = args['_'].join(' ')
+let msg = args.slice(1).join(' ')
 msg = msg.replace(/['"]/g, '')
 msg = msg.trim()
 msg = msg || ' - '
