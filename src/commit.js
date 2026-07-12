@@ -1,17 +1,14 @@
 import simpleGit from 'simple-git'
 import chalk from 'chalk'
-import yargs from 'yargs'
 const args = process.argv
 
-  console.log(args)
 let path = process.cwd()
 const repo = simpleGit(path)
 
-let msg = args.slice(1).join(' ')
+let msg = args.slice(2).join(' ')
 msg = msg.replace(/['"]/g, '')
 msg = msg.trim()
 msg = msg || ' - '
-console.log(msg)
 
 repo.commit(msg, function(err, r) {
   if (err) {
