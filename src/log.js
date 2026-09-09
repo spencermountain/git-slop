@@ -1,18 +1,14 @@
 #! /usr/bin/env node
-import simpleGit from 'simple-git'
 import chalk from 'chalk'
 import spacetime from 'spacetime'
-import './_polyfill.js'
-
-let path = process.cwd()
-const repo = simpleGit(path)
+import { hasHead, runInGitRepo } from './_git.js'
 
 const printLog = function(commits) {
   let lastDay = null
   commits.forEach(c => {
-    let s = spacetime(c.date.substr(0, 19))
+    let s = spacetime(c.date)
     let user = c.author_name
-    let day = s.dayOfYear() + user
+    let day = `${s.year()}-${s.dayOfYear()}-${user}`
     if (day !== lastDay) {
       let out = chalk.magenta(s.format('MMM d'))
       //add year, if necessary
@@ -34,11 +30,13 @@ const printLog = function(commits) {
   console.log(length.padStart(30, ' '))
 }
 
-// git.Repository.openExt(path, 2, '~')
-//   .then(function(repo) {
-//     countCommits(repo);
-//   });
-repo.log(function(err, res) {
-  let commits = res.all.slice(0, 25)
-  printLog(commits)
-})
+const baseDir = process.argv[2] || process.cwd()
+
+await runInGitRepo(async repo => {
+  if (!(await hasHead(repo))) {
+    printLog([])
+    return
+  }
+  const result = await repo.log({ maxCount: 25 })
+  printLog(result.all)
+}, baseDir)

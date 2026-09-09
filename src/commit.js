@@ -1,27 +1,20 @@
-import simpleGit from 'simple-git'
+#! /usr/bin/env node
 import chalk from 'chalk'
-const args = process.argv
+import { runInGitRepo } from './_git.js'
 
-let path = process.cwd()
-const repo = simpleGit(path)
+const msg = process.argv.slice(2).join(' ').trim()
 
-let msg = args.slice(2).join(' ')
-msg = msg.replace(/['"]/g, '')
-msg = msg.trim()
-msg = msg || ' - '
-
-repo.commit(msg, function(err, r) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  if (!r || !r.commit || !r.summary || r.summary.changes === 0) {
-    console.log(chalk.magenta('\n                 -empty- '))
-    return
-  }
-  let noun = ' change'
-  if (r.summary.changes > 1) {
-    noun += 's'
-  }
-  console.log(chalk.green('          +' + r.summary.changes + noun))
-})
+if (!msg) {
+  console.error('Usage: slop-commit <message>')
+  process.exitCode = 1
+} else {
+  await runInGitRepo(async repo => {
+    const result = await repo.commit(msg)
+    if (!result.commit || !result.summary || result.summary.changes === 0) {
+      console.log(chalk.magenta('\n                 -empty- '))
+      return
+    }
+    let noun = result.summary.changes === 1 ? ' change' : ' changes'
+    console.log(chalk.green('          +' + result.summary.changes + noun))
+  })
+}

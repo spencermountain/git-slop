@@ -1,12 +1,7 @@
 #! /usr/bin/env node
 'use strict'
-import simpleGit from 'simple-git'
-import './_polyfill.js'
 import chalk from 'chalk'
-
-let path = process.cwd()
-
-const repo = simpleGit(path)
+import { runInGitRepo } from './_git.js'
 
 const printLine = function(file, symbol, color, isStaged) {
   let msg = chalk[color](symbol + ' ' + file)
@@ -44,7 +39,15 @@ const printConflicted = function(arr, staged) {
   })
 }
 
-repo.status((err, status) => {
+const baseDir = process.argv[2] || process.cwd()
+
+await runInGitRepo(async (repo) => {
+  const status = await repo.status()
+  if (status.isClean()) {
+    console.log(chalk.green('  ✓'))
+    return
+  }
+
   let staged = status.staged.reduce((h, f) => {
     h[f] = true
     return h
@@ -52,11 +55,10 @@ repo.status((err, status) => {
   let renamed = status.renamed.map(o => o.to)
   status.created.forEach(f => (staged[f] = true))
   renamed.forEach(f => (staged[f] = true))
-  // console.log(status)
   printConflicted(status.conflicted, staged)
   printModified(status.modified, staged)
   printNew(status.not_added, staged)
   printNew(status.created, staged)
   printRemoved(status.deleted, staged)
   printMoved(renamed, staged)
-})
+}, baseDir)
