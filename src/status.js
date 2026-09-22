@@ -1,5 +1,4 @@
-#! /usr/bin/env node
-'use strict'
+#! /usr/bin / env node
 import { styleText } from 'node:util'
 import { runInGitRepo } from './_git.js'
 

@@ -40,7 +40,7 @@ export default [
       'consistent-return': 'warn',
       'no-nested-ternary': 'warn',
       'no-bitwise': 'warn',
-      'no-console': 'warn',
+      'no-console': 'off',
       'no-duplicate-imports': 'warn',
       'no-eval': 'error',
       'no-implied-eval': 'error',
