@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 import { styleText } from 'node:util'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'

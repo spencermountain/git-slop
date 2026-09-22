@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 import { styleText } from 'node:util'
 import spacetime from 'spacetime'
 import { hasHead, runInGitRepo } from './_git.js'

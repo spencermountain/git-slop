@@ -2,14 +2,15 @@
   "name": "git-slop",
   "version": "1.0.0",
   "description": "cleaner git commands",
+  "license": "MIT",
+  "repository": "github:spencermountain/git-slop",
+  "homepage": "https://work.spencermountain.dev/git-slop",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "files": [
-    "src"
+  "keywords": [
+    "git",
+    "cli"
   ],
-  "scripts": {
-    "test": "node --test",
-    "lint": "eslint ."
-  },
   "bin": {
     "slop-status": "./src/status.js",
     "slop-log": "./src/log.js",
@@ -18,18 +19,22 @@
     "slop-commit": "./src/commit.js",
     "slop-push": "./src/push.js"
   },
+  "sideEffects": false,
   "engines": {
     "node": ">=22.13"
   },
-  "repository": "github:spencermountain/git-slop",
-  "homepage": "https://work.spencermountain.dev/git-slop",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint ."
+  },
+  "files": [
+    "src"
+  ],
   "dependencies": {
     "simple-git": "3.36.0",
     "spacetime": "7.15.0"
   },
   "devDependencies": {
     "eslint": "10.11.0"
-  },
-  "license": "MIT"
+  }
 }
