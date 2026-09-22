@@ -1,8 +1,8 @@
 #! /usr/bin/env node
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 import { runInGitRepo } from './_git.js'
 
 await runInGitRepo(async repo => {
   await repo.push()
-  console.log(chalk.green('  ✓'))
+  console.log(styleText('green', '  ✓'))
 })

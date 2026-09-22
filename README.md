@@ -7,7 +7,7 @@
 
 ## Install
 
-git-slop requires Node.js 20 or newer.
+git-slop requires Node.js 22.13 or newer.
 
 ```sh
 npm install --global git-slop
@@ -51,8 +51,7 @@ alias glog="slop-log"
 
 ![slop-people output](https://user-images.githubusercontent.com/399657/155150945-bfef5793-a7f1-4040-83fa-296b5ae241cb.png)
 
-Built with [simple-git](https://www.npmjs.com/package/simple-git),
-[Chalk](https://www.npmjs.com/package/chalk), and
+Built with [simple-git](https://www.npmjs.com/package/simple-git) and
 [Spacetime](https://www.npmjs.com/package/spacetime).
 
 MIT

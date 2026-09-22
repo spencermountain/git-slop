@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 import spacetime from 'spacetime'
 import { hasHead, runInGitRepo } from './_git.js'
 
@@ -10,20 +10,20 @@ const printLog = function(commits) {
     let user = c.author_name
     let day = `${s.year()}-${s.dayOfYear()}-${user}`
     if (day !== lastDay) {
-      let out = chalk.magenta(s.format('MMM d'))
+      let out = s.format('MMM d')
       //add year, if necessary
       if (s.year() !== new Date().getFullYear()) {
         out += ' ' + s.year()
       }
-      console.log(out.padEnd(18, ' ') + chalk.yellow('- ' + user + ' -'))
+      console.log(styleText('magenta', out.padEnd(18, ' ')) + styleText('yellow', '- ' + user + ' -'))
     }
     lastDay = day
     let time = '    ' + s.format('time')
     time = time.padEnd(12, ' ')
-    time = chalk.grey(time)
+    time = styleText('grey', time)
 
     let msg = c.message.split('\n')[0]
-    msg = chalk.blue(msg)
+    msg = styleText('blue', msg)
     console.log(time + ' ' + msg)
   })
   let length = commits.length + ' commits total.'

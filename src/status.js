@@ -1,14 +1,14 @@
 #! /usr/bin/env node
 'use strict'
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 import { runInGitRepo } from './_git.js'
 
 const printLine = function(file, symbol, color, isStaged) {
-  let msg = chalk[color](symbol + ' ' + file)
+  let msg = symbol + ' ' + file
   if (isStaged) {
-    msg = msg.padStart(42, ' ') + chalk.grey('   | ')
+    msg = styleText(color, msg.padStart(35, ' ')) + styleText('grey', '   | ')
   } else {
-    msg = ''.padEnd(35, ' ') + chalk.grey('   |   ') + msg
+    msg = ''.padEnd(35, ' ') + styleText('grey', '   |   ') + styleText(color, msg)
   }
   console.log(msg)
 }
@@ -44,7 +44,7 @@ const baseDir = process.argv[2] || process.cwd()
 await runInGitRepo(async (repo) => {
   const status = await repo.status()
   if (status.isClean()) {
-    console.log(chalk.green('  ✓'))
+    console.log(styleText('green', '  ✓'))
     return
   }
 

@@ -1,8 +1,7 @@
 #! /usr/bin/env node
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
-import got from 'got'
 import simpleGit from 'simple-git'
 import { printGitError } from './_git.js'
 
@@ -86,17 +85,21 @@ try {
   }
 
   const repoPath = repo.split('/').map(encodeURIComponent).join('/')
-  const data = await got(`https://api.github.com/repos/${repoPath}/issues`, {
-    headers,
-    searchParams: { per_page: 30, state: 'open' }
-  }).json()
+  const url = new URL(`https://api.github.com/repos/${repoPath}/issues`)
+  url.searchParams.set('per_page', '30')
+  url.searchParams.set('state', 'open')
+  const response = await fetch(url, { headers })
+  if (!response.ok) {
+    throw new Error(`GitHub request failed (${response.status})`)
+  }
+  const data = await response.json()
   if (!Array.isArray(data)) {
     throw new Error('GitHub returned an unexpected response')
   }
 
   const issues = data.filter(item => !item.pull_request).slice(0, 5)
   if (issues.length === 0) {
-    console.log(chalk.blue('\n   -    no open issues!   -\n'))
+    console.log(styleText('blue', '\n   -    no open issues!   -\n'))
   } else {
     issues.forEach(issue => {
       let title = issue.title || ''
@@ -104,14 +107,10 @@ try {
         title = title.substring(0, 68) + '..'
       }
       console.log(
-        `    ${chalk.blue('#' + issue.number)}   -  ${chalk.green(title)}`
+        `    ${styleText('blue', '#' + issue.number)}   -  ${styleText('green', title)}`
       )
     })
   }
 } catch (err) {
-  if (err.response?.statusCode) {
-    printGitError(new Error(`GitHub request failed (${err.response.statusCode})`))
-  } else {
-    printGitError(err)
-  }
+  printGitError(err)
 }

@@ -1,10 +1,10 @@
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 import simpleGit from 'simple-git'
 
 export const printGitError = err => {
   const raw = err && err.message ? err.message : String(err)
   const message = raw.split('\n')[0].replace(/^fatal:\s*/i, '')
-  console.error(chalk.red(`Error: ${message}`))
+  console.error(styleText('red', `Error: ${message}`, { stream: process.stderr }))
   process.exitCode = 1
 }
 

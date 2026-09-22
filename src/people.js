@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import chalk  from 'chalk'
+import { styleText } from 'node:util'
 import { hasHead, runInGitRepo } from './_git.js'
 
 const baseDir = process.argv[2] || process.cwd()
@@ -20,7 +20,7 @@ await runInGitRepo(async repo => {
     const match = line.match(/^\s*(\d+)\s+(.+)$/)
     if (match) {
       const [, count, name] = match
-      console.log(chalk.blue(name.padEnd(20)) + ' ' + chalk.yellow(Number(count).toLocaleString()))
+      console.log(styleText('blue', name.padEnd(20)) + ' ' + styleText('yellow', Number(count).toLocaleString()))
     }
   })
 }, baseDir)

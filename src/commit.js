@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 import { runInGitRepo } from './_git.js'
 
 const msg = process.argv.slice(2).join(' ').trim()
@@ -11,10 +11,10 @@ if (!msg) {
   await runInGitRepo(async repo => {
     const result = await repo.commit(msg)
     if (!result.commit || !result.summary || result.summary.changes === 0) {
-      console.log(chalk.magenta('\n                 -empty- '))
+      console.log(styleText('magenta', '\n                 -empty- '))
       return
     }
     let noun = result.summary.changes === 1 ? ' change' : ' changes'
-    console.log(chalk.green('          +' + result.summary.changes + noun))
+    console.log(styleText('green', '          +' + result.summary.changes + noun))
   })
 }
