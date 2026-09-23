@@ -47,11 +47,11 @@ await runInGitRepo(async (repo) => {
     return
   }
 
-  let staged = status.staged.reduce((h, f) => {
+  const staged = status.staged.reduce((h, f) => {
     h[f] = true
     return h
   }, {})
-  let renamed = status.renamed.map(o => o.to)
+  const renamed = status.renamed.map(o => o.to)
   status.created.forEach(f => (staged[f] = true))
   renamed.forEach(f => (staged[f] = true))
   printConflicted(status.conflicted, staged)

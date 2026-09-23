@@ -14,7 +14,7 @@ if (!msg) {
       console.log(styleText('magenta', '\n                 -empty- '))
       return
     }
-    let noun = result.summary.changes === 1 ? ' change' : ' changes'
+    const noun = result.summary.changes === 1 ? ' change' : ' changes'
     console.log(styleText('green', '          +' + result.summary.changes + noun))
   })
 }

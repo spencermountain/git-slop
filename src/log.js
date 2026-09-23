@@ -6,9 +6,9 @@ import { hasHead, runInGitRepo } from './_git.js'
 const printLog = function(commits) {
   let lastDay = null
   commits.forEach(c => {
-    let s = spacetime(c.date)
-    let user = c.author_name
-    let day = `${s.year()}-${s.dayOfYear()}-${user}`
+    const s = spacetime(c.date)
+    const user = c.author_name
+    const day = `${s.year()}-${s.dayOfYear()}-${user}`
     if (day !== lastDay) {
       let out = s.format('MMM d')
       //add year, if necessary
@@ -26,7 +26,7 @@ const printLog = function(commits) {
     msg = styleText('blue', msg)
     console.log(time + ' ' + msg)
   })
-  let length = commits.length + ' commits total.'
+  const length = commits.length + ' commits total.'
   console.log(length.padStart(30, ' '))
 }
 
