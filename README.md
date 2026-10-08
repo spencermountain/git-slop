@@ -40,6 +40,7 @@ pnpm link --global
 - `slop-commit <message>` commits staged changes with the supplied message.
 - `slop-push` pushes the current branch.
 - `slop-diff` pretty-printed summary of git-diff 
+- `slop-diff-file` pretty-printed diff of one file 
 
 `slop-issues` reads the nearest package.json repository field and falls back to
 the Git remote. Set `GITHUB_TOKEN` when querying private repositories or when
@@ -65,6 +66,9 @@ alias glog="slop-log"
 ### Diff
 
 ![slop-diff output](https://github.com/user-attachments/assets/1fc60989-11d7-4f33-b934-af62dd42d6e9)
+
+### Diff-file
+![slop-diff-file output](https://github.com/user-attachments/assets/3225cba2-c20c-4fa4-a2ca-b1d74f0025d0)
 
 ### Issues
 

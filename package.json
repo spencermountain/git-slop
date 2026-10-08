@@ -12,6 +12,7 @@
     "slop-all": "./src/all.js",
     "slop-status": "./src/status.js",
     "slop-diff": "./src/diff.js",
+    "slop-diff-file": "./src/diff-file.js",
     "slop-log": "./src/log.js",
     "slop-issues": "./src/issues.js",
     "slop-people": "./src/people.js",
