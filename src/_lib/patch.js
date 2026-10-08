@@ -8,7 +8,12 @@ const summarizePatch = patch => {
     // Pair replacements by position within the same changed block.
     const paired = Math.min(removed.length, added.length)
     added.slice(0, paired).forEach(line => lines.push('~' + line.slice(1)))
-    lines.push(...removed.slice(paired), ...added.slice(paired))
+    for (let i = paired; i < removed.length; i += 1) {
+      lines.push(removed[i])
+    }
+    for (let i = paired; i < added.length; i += 1) {
+      lines.push(added[i])
+    }
     removed = []
     added = []
   }

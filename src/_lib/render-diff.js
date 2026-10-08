@@ -1,4 +1,5 @@
 import { stripVTControlCharacters, styleText } from 'node:util'
+import { relative, resolve } from 'node:path'
 import { preview } from './diff.js'
 
 const maxPreview = 10
@@ -31,6 +32,7 @@ const renderDiff = async (repo, files, { full = false } = {}) => {
     print()
     return
   }
+  const root = (await repo.revparse(['--show-toplevel'])).trim()
   for (const [index, file] of files.entries()) {
     if (index >= maxExpandedFiles) {
       print()
@@ -59,7 +61,7 @@ const renderDiff = async (repo, files, { full = false } = {}) => {
     })
     const counts = Object.entries(totals)
       .sort((a, b) => b[1] - a[1])
-      .map(([marker, count]) => {
+      .map(([marker, count], countIndex) => {
         const style = [markerColors[marker]]
         if (count === 0) {
           style.push('dim')
@@ -67,7 +69,8 @@ const renderDiff = async (repo, files, { full = false } = {}) => {
         if (count > 10) {
           style.push('underline')
         }
-        return [String(count), style]
+        const sign = countIndex === 0 && marker !== '~' ? marker : ''
+        return [sign + count, style]
       })
     if (file.type === 'A' || file.type === 'D') {
       const symbol = file.type === 'A' ? '+' : '🗑️'
@@ -105,7 +108,22 @@ const renderDiff = async (repo, files, { full = false } = {}) => {
     }
     const remaining = lines.length - shown.length
     if (remaining > 0) {
-      print(['    see full - git diff ', ['grey', 'dim']], ['./' + file.name, ['grey', 'dim', 'italic']])
+      const path = './' + relative(process.cwd(), resolve(root, file.name))
+      const quoted = "'" + path.replace(/'/g, "'\\''") + "'"
+      let command = 'slop-diff-file'
+      if (!file.lines) {
+        const staged = await repo.raw([
+          '--literal-pathspecs', 'diff', '--cached', '--name-only', '-z', 'HEAD', '--', file.name
+        ])
+        command = /[*?\[\]\\]/.test(path) ? 'git --literal-pathspecs diff' : 'git diff'
+        if (staged) {
+          command += ' HEAD'
+        }
+        command += ' --'
+      }
+      // Keep the command complete so long paths remain copyable.
+      createPrinter(Infinity)([`    see full - ${command} `, ['grey', 'dim']],
+        [quoted, ['grey', 'dim', 'italic']])
     }
   }
   print()

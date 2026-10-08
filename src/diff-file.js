@@ -5,13 +5,22 @@ import { runInGitRepo } from './_git.js'
 import { changes } from './_lib/diff.js'
 import renderDiff from './_lib/render-diff.js'
 
-const filename = process.argv[2]
+const args = process.argv.slice(2)
+if (args[0] === '--') {
+  args.shift()
+}
+const filename = args[0]
 
-if (!filename || process.argv.length !== 3) {
-  console.error('Usage: slop-diff-file <file>')
+if (args.length > 1 || filename === '') {
+  console.error('Usage: slop-diff-file [--] [file]')
   process.exitCode = 1
 } else {
   await runInGitRepo(async repo => {
+    if (filename === undefined) {
+      const files = await changes(repo)
+      await renderDiff(repo, files)
+      return
+    }
     const path = resolve(filename)
     const stat = await lstat(path).catch(err => {
       if (err.code === 'ENOENT') {
