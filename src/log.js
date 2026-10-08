@@ -3,19 +3,24 @@ import { styleText } from 'node:util'
 import spacetime from 'spacetime'
 import { hasHead, runInGitRepo } from './_git.js'
 
-const printLog = function(commits) {
+const printLog = commits => {
   let lastDay = null
-  commits.forEach(c => {
+  commits.forEach((c, index) => {
     const s = spacetime(c.date)
-    const user = c.author_name
+    const email = c.author_email || ''
+    let user = email.split('@')[0] || c.author_name
+    if (email.endsWith('@users.noreply.github.com')) {
+      user = user.replace(/^\d+\+/, '')
+    }
     const day = `${s.year()}-${s.dayOfYear()}-${user}`
     if (day !== lastDay) {
-      let out = s.format('MMM d')
+      let out = s.format('{day-short} {month-short} {date-ordinal}')
       //add year, if necessary
       if (s.year() !== new Date().getFullYear()) {
         out += ' ' + s.year()
       }
-      console.log(styleText('magenta', out.padEnd(18, ' ')) + styleText('yellow', '- ' + user + ' -'))
+      const arrow = index === 0 ? styleText('magenta', '↓ ') : '  '
+      console.log(arrow + styleText('magenta', out) + ' ' + styleText(['yellow', 'dim'], '- ' + user))
     }
     lastDay = day
     let time = '    ' + s.format('time')
