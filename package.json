@@ -7,12 +7,11 @@
   "homepage": "https://work.spencermountain.dev/git-slop",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "keywords": [
-    "git",
-    "cli"
-  ],
   "bin": {
+    "gall": "./src/all.js",
+    "slop-all": "./src/all.js",
     "slop-status": "./src/status.js",
+    "slop-diff": "./src/diff.js",
     "slop-log": "./src/log.js",
     "slop-issues": "./src/issues.js",
     "slop-people": "./src/people.js",
@@ -30,11 +29,15 @@
   "files": [
     "src"
   ],
+  "keywords": [
+    "git",
+    "cli"
+  ],
   "dependencies": {
     "simple-git": "3.36.0",
-    "spacetime": "7.15.0"
+    "spacetime": "7.16.0"
   },
   "devDependencies": {
-    "eslint": "10.11.0"
+    "eslint": "10.12.0"
   }
 }

@@ -1,16 +1,34 @@
 <div align="center">
-  <a href="https://npmjs.org/package/git-slop">
-    <img src="https://img.shields.io/npm/v/git-slop.svg?style=flat-square" alt="npm version" />
+  <div><b>git-slop</b></div>
+  <div>Pretty-printed git outputs</div>
+  <div><code>npm install git-slop</code></div>
+  <div align="center">
+    <sub>
+      by
+      <a href="https://github.com/spencermountain">Spencer Kelly</a>
+    </sub>
+  </div>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+<!--2nd row-->
+<div align="center">
+  <div>
+    <a href="https://npmjs.org/package/git-slop">
+    <img src="https://img.shields.io/npm/v/git-slop.svg?style=flat-square" />
   </a>
-  <div>Make fewer mistakes with cleaner Git commands.</div>
+  </div>
 </div>
 
 ## Install
-
-git-slop requires Node.js 22.13 or newer.
-
 ```sh
 npm install --global git-slop
+```
+
+alternatively:
+```js
+git clone https://github.com/spencermountain/git-slop.git
+cd ./git-slop
+pnpm link --global
 ```
 
 ## Commands
@@ -21,6 +39,7 @@ npm install --global git-slop
 - `slop-issues [path]` shows up to five open GitHub issues.
 - `slop-commit <message>` commits staged changes with the supplied message.
 - `slop-push` pushes the current branch.
+- `slop-diff` pretty-printed summary of git-diff 
 
 `slop-issues` reads the nearest package.json repository field and falls back to
 the Git remote. Set `GITHUB_TOKEN` when querying private repositories or when
@@ -43,6 +62,10 @@ alias glog="slop-log"
 
 ![slop-log output](https://user-images.githubusercontent.com/399657/40754315-b9a437a8-6446-11e8-8880-d42b05915cd3.png)
 
+### Diff
+
+![slop-diff output](https://github.com/user-attachments/assets/1fc60989-11d7-4f33-b934-af62dd42d6e9)
+
 ### Issues
 
 ![slop-issues output](https://user-images.githubusercontent.com/399657/44490437-5a62db00-a62c-11e8-8494-49890180848b.png)
@@ -51,7 +74,8 @@ alias glog="slop-log"
 
 ![slop-people output](https://user-images.githubusercontent.com/399657/155150945-bfef5793-a7f1-4040-83fa-296b5ae241cb.png)
 
+--- 
 Built with [simple-git](https://www.npmjs.com/package/simple-git) and
 [Spacetime](https://www.npmjs.com/package/spacetime).
 
-MIT
+MIT - PRs welcome
