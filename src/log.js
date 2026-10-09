@@ -3,6 +3,8 @@ import { styleText } from 'node:util'
 import spacetime from 'spacetime'
 import { hasHead, runInGitRepo } from './_git.js'
 
+const messageWidth = 20
+
 const printLog = commits => {
   let lastDay = null
   commits.forEach((c, index) => {
@@ -28,8 +30,9 @@ const printLog = commits => {
     time = styleText('grey', time)
 
     let msg = c.message.split('\n')[0]
-    msg = styleText('blue', msg)
-    console.log(time + ' ' + msg)
+    msg = styleText('blue', msg.padEnd(messageWidth, ' '))
+    const hash = styleText(['cyan', 'dim'], c.hash.slice(0, 7))
+    console.log(time + ' ' + msg + ' ' + hash)
   })
   const length = commits.length + ' commits total.'
   console.log(length.padStart(30, ' '))
